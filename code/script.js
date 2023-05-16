@@ -59,15 +59,6 @@ form.addEventListener('submit', function(event) {
   drawInstructions(); // Draw the instructions after the form is submitted
 });
 
-async function saveData(data) {
-  try {
-    const docRef = await addDoc(collection(db, "experiment"), data);
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
-
 const circle = {
     x: canvas.width / 2,
     y: canvas.height / 2,
