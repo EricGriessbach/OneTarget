@@ -1,3 +1,5 @@
+import { collection, addDoc } from "firebase/firestore";
+
 const gameContainer = document.getElementById("gameContainer");
 const toggleMappingButton = document.getElementById("toggleMapping");
 const instructions = document.getElementById("instructions");
@@ -29,6 +31,12 @@ let onBreak = false;
 
 let gameStarted = false;
 
+const data = {
+  participantId: "example123",
+  condition: "control",
+  score: 42,
+};
+
 const form = document.getElementById('form');
 const registrationForm = document.getElementById('registrationForm');
 
@@ -53,6 +61,14 @@ form.addEventListener('submit', function(event) {
   drawInstructions(); // Draw the instructions after the form is submitted
 });
 
+async function saveData(data) {
+  try {
+    const docRef = await addDoc(collection(db, "experiment"), data);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
 
 const circle = {
     x: canvas.width / 2,
@@ -278,7 +294,7 @@ function startBreak() {
   score = 0;
   scoreDisplay.textContent = score;
   trials = 0;
-
+  saveData(data);
   const breakInterval = setInterval(() => {
     breakTime -= 1;
     if (breakTime <= 0) {
