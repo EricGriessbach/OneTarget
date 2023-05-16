@@ -1,3 +1,36 @@
+
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDQYXw2WywxWOEB6rWqikpNobXO2YHVs6Y",
+  authDomain: "onlineexperiment-a72fb.firebaseapp.com",
+  projectId: "onlineexperiment-a72fb",
+  storageBucket: "onlineexperiment-a72fb.appspot.com",
+  messagingSenderId: "485166807071",
+  appId: "1:485166807071:web:4b24c2813702bee8e8bd2a",
+  measurementId: "G-8F4R7WCGH7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+async function saveData(data) {
+  try {
+    const docRef = await addDoc(collection(db, "experiment"), data);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+
+
 const gameContainer = document.getElementById("gameContainer");
 const toggleMappingButton = document.getElementById("toggleMapping");
 const instructions = document.getElementById("instructions");
