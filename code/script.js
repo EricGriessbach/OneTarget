@@ -1,5 +1,3 @@
-import { collection, addDoc } from "firebase/firestore";
-
 const gameContainer = document.getElementById("gameContainer");
 const toggleMappingButton = document.getElementById("toggleMapping");
 const instructions = document.getElementById("instructions");
