@@ -287,8 +287,11 @@ function startBreak() {
   score = 0;
   scoreDisplay.textContent = score;
   trials = 0;
-  saveData(data);
-  const breakInterval = setInterval(() => {
+  // Ensure authentication before saving data
+  authenticate().then(() => {
+    saveData(data);
+  });  
+const breakInterval = setInterval(() => {
     breakTime -= 1;
     if (breakTime <= 0) {
       clearInterval(breakInterval);
