@@ -14,36 +14,38 @@
       measurementId: "G-8F4R7WCGH7"
     };
     
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    // Get a reference to the Auth service
-    const auth = getAuth(app);
-    let uid = null;
-    // Authenticate anonymously
-    signInAnonymously(auth)
-      .then((userCredential) => {
-        // User is signed in anonymously.
-        uid = userCredential.user.uid;
-        console.log("User signed in anonymously with uid: ", uid);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Error: ", errorCode, errorMessage);
-      });
-    
-    export async function saveData(data) {
-      if (uid) {
-        db.collection("games").doc(uid).set(data)
-          .then(function() {
-            console.log("Document successfully written!");
-          })
-          .catch(function(error) {
-            console.error("Error writing document: ", error);
-          });
-      } else {
-        console.error("User is not authenticated. Cannot save data.");
-      }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+// Get a reference to the Auth service
+const auth = getAuth(app);
+
+let uid = null;
+
+// Authenticate anonymously and set uid
+export async function authenticate() {
+  try {
+    const userCredential = await signInAnonymously(auth);
+    // User is signed in anonymously.
+    uid = userCredential.user.uid;
+    console.log("User signed in anonymously with uid: ", uid);
+    return uid;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error("Error: ", errorCode, errorMessage);
+  }
+}
+
+export async function saveData(data) {
+  if (uid) {
+    try {
+      await setDoc(doc(db, "games", uid), data);
+      console.log("Document successfully written!");
+    } catch (error) {
+      console.error("Error writing document: ", error);
     }
-    
+  } else {
+    console.error("User is not authenticated. Cannot save data.");
+  }
+}
