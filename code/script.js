@@ -1,35 +1,4 @@
-
-    // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDQYXw2WywxWOEB6rWqikpNobXO2YHVs6Y",
-  authDomain: "onlineexperiment-a72fb.firebaseapp.com",
-  projectId: "onlineexperiment-a72fb",
-  storageBucket: "onlineexperiment-a72fb.appspot.com",
-  messagingSenderId: "485166807071",
-  appId: "1:485166807071:web:4b24c2813702bee8e8bd2a",
-  measurementId: "G-8F4R7WCGH7"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-async function saveData(data) {
-  try {
-    const docRef = await addDoc(collection(db, "experiment"), data);
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
-
-
+import { saveData } from "./saveData";
 
 const gameContainer = document.getElementById("gameContainer");
 const toggleMappingButton = document.getElementById("toggleMapping");
@@ -91,6 +60,7 @@ form.addEventListener('submit', function(event) {
   
   drawInstructions(); // Draw the instructions after the form is submitted
 });
+
 
 const circle = {
     x: canvas.width / 2,
@@ -276,7 +246,7 @@ function drawInstructions() {
   ctx.fillText("Pizza Delivery Game", canvas.width / 2, canvas.height / 2 - 180);
   ctx.fillText("Your task is to deliver all pizzas as fast as possible.", canvas.width / 2, canvas.height / 2 - 130);
   ctx.fillText("The current deliver spot is marked by a pizza slice.", canvas.width / 2, canvas.height / 2 - 80);
-  ctx.fillText('Accelerate your car with "w", "s", "j", and "l" to drive to the deliver spot.', canvas.width / 2, canvas.height / 2 - 30);
+  ctx.fillText('Move your car with "w", "s", "j", and "l" to drive to the deliver spot.', canvas.width / 2, canvas.height / 2 - 30);
   ctx.fillText("The faster you are, the higher the tip will be.", canvas.width / 2, canvas.height / 2 + 20);
   // Draw the Start Game button
   ctx.fillStyle = "lightgray";
