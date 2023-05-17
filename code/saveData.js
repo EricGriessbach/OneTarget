@@ -17,24 +17,33 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-
-    firebase.auth().signInAnonymously()
-    .then((userCredential) => {
-    // User is signed in anonymously.
-      var uid = userCredential.user.uid;
-      console.log("User signed in anonymously with uid: ", uid);
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.error("Error: ", errorCode, errorMessage);
-    });
-
+    // Get a reference to the Auth service
+    const auth = getAuth(app);
+    let uid = null;
+    // Authenticate anonymously
+    signInAnonymously(auth)
+      .then((userCredential) => {
+        // User is signed in anonymously.
+        uid = userCredential.user.uid;
+        console.log("User signed in anonymously with uid: ", uid);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Error: ", errorCode, errorMessage);
+      });
+    
     export async function saveData(data) {
-      try {
-        const docRef = await addDoc(collection(db, "experiment"), data);
-        console.log("Document written with ID: ", docRef.id);
-      } catch (e) {
-        console.error("Error adding document: ", e);
+      if (uid) {
+        db.collection("games").doc(uid).set(data)
+          .then(function() {
+            console.log("Document successfully written!");
+          })
+          .catch(function(error) {
+            console.error("Error writing document: ", error);
+          });
+      } else {
+        console.error("User is not authenticated. Cannot save data.");
       }
     }
+    
