@@ -30,6 +30,9 @@ let breakTime = breakDuration;
 let blockScores = [];
 let onBreak = false;
 
+let frames = []; // Data for each frame will be stored here
+let frameCount = 0; // Frame counter
+
 let gameStarted = false;
 
 const data = {
@@ -189,7 +192,17 @@ function handleKeyUp(event) {
 
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  
+    // Store the data for this frame
+  frames.push({
+    frame: frameCount,
+    cursorPosition: { x: circle.x, y: circle.y },
+    targetPosition: { x: target.x, y: target.y },
+    targetNumber: trials,
+    blockNumber: blockScores.length,
+    identifier: localStorage.getItem('identifier')
+  });
+  
   if (onBreak) {
       drawBreakInfo();
   } else {
