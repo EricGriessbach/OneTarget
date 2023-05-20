@@ -278,9 +278,9 @@ function startBreak() {
   scoreDisplay.textContent = score;
   trials = 0;
   // Ensure authentication before saving data
-  //authenticate().then(() => {
-  //  saveData(data, "pizza");
-  //});  
+  authenticate().then(() => {
+    saveData(data, "pizza");
+  });  
 const breakInterval = setInterval(() => {
     breakTime -= 1;
     if (breakTime <= 0) {
