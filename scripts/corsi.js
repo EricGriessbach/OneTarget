@@ -12,6 +12,7 @@ var totalErrorDistance = 0;
 var canStartNextTrial = true;
 var data = []; 
 var corsi_end = false;
+const n_trials = 2;
 
 function createTarget() {
     return {
@@ -92,7 +93,7 @@ function recordClick(e) {
             canvas.removeEventListener('click', recordClick, false);
             calculateError();
             trialCounter++;
-            if (trialCounter < 10) {
+            if (trialCounter < n_trials) {
                 var screenDiagonal = Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
                 var errorPercentage = (totalErrorDistance / screenDiagonal) * 100;
                 errorPercentage = Math.round(errorPercentage);
@@ -100,7 +101,7 @@ function recordClick(e) {
                 writeInstructions(['Mean distance error: ' + errorPercentage + '%', 'Press SPACEBAR to start the next trial.']);
                 setTimeout(() => {
                     canStartNextTrial = true;
-                }, 2000);
+                }, 100);
             } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 corsi_end = true; 
