@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";    
@@ -23,6 +24,7 @@ const auth = getAuth(app);
 let uid = null;
 
 // Authenticate anonymously and set uid
+
 export async function authenticate() {
   try {
     const userCredential = await signInAnonymously(auth);
@@ -37,10 +39,10 @@ export async function authenticate() {
   }
 }
 
-export async function saveData(data) {
+export async function saveData(data, task) {
   if (uid) {
     try {
-      await setDoc(doc(db, "games", uid), data);
+      await setDoc(doc(db, task, uid), data);
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
