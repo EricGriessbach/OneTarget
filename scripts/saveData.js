@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-/*
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";    
@@ -51,4 +51,3 @@ export async function saveData(data, task) {
     console.error("User is not authenticated. Cannot save data.");
   }
 }
-*/
