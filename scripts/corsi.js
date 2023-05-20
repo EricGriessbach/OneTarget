@@ -93,7 +93,7 @@ function recordClick(e) {
             canvas.removeEventListener('click', recordClick, false);
             calculateError();
             trialCounter++;
-            if (trialCounter < n_trials) {
+            if (trialCounter < n_trials + 1) {
                 var screenDiagonal = Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
                 var errorPercentage = (totalErrorDistance / screenDiagonal) * 100;
                 errorPercentage = Math.round(errorPercentage);
