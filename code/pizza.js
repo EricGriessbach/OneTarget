@@ -1,15 +1,10 @@
-import { saveData, authenticate } from "./saveData.js";
-
+//import { saveData, authenticate } from "./saveData.js";
 
 const gameContainer = document.getElementById("gameContainer");
 const toggleMappingButton = document.getElementById("toggleMapping");
-const instructions = document.getElementById("instructions");
 const pointsReceivedDisplay = document.getElementById("pointsReceived");
 const canvas = document.getElementById("gameCanvas");
 const scoreDisplay = document.getElementsByClassName("scoreDisplay")[0];
-const scoreSpan = document.getElementById("score");
-const startGameButton = document.getElementById("startGame");
-const instructionsPage = document.getElementById("instructionsPage");
 
 const ctx = canvas.getContext('2d');
 let score = 0;
@@ -30,42 +25,24 @@ let breakTime = breakDuration;
 let blockScores = [];
 let onBreak = false;
 
-let frames = []; // Data for each frame will be stored here
+let data = []; // Data for each frame will be stored here
 let frameCount = 0; // Frame counter
 
 let gameStarted = false;
 
-const data = {
-  participantId: "example123",
-  condition: "control",
-  score: 42,
-};
-
-const form = document.getElementById('form');
-const registrationForm = document.getElementById('registrationForm');
-
-form.addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent the form from submitting normally
-
-  // Generate the identifier based on the form inputs
-  const identifier = form.street.value.charAt(0) +
-                     form.surname.value.charAt(0) +
-                     form.age.value.toString().charAt(0) +
-                     form.city.value.charAt(0) +
-                     form.hobby.value.charAt(0) +
-                     form.birthday.value.toString().charAt(0);
-  
-  // Store the identifier in localStorage or send it to a server
-  localStorage.setItem('identifier', identifier);
-
-  // Hide the registration form and show the game container
-  registrationForm.style.display = 'none';
-  gameContainer.style.display = 'block';
-  
-  drawInstructions(); // Draw the instructions after the form is submitted
-});
-
-
+const identifier = localStorage.getItem('identifier');
+/*
+if (!identifier) {
+    ctx.fillStyle = "red";
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("No identifier was found.", canvas.width / 2, canvas.height / 2 - 50);
+    ctx.fillText("Please start the experiment again with the original link provided.", canvas.width / 2, canvas.height / 2);
+    // stop further execution of the script
+    throw new Error('No identifier was found');
+}
+*/
+// The circle object
 const circle = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -194,13 +171,13 @@ function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
     // Store the data for this frame
-  frames.push({
+  data.push({
     frame: frameCount,
     cursorPosition: { x: circle.x, y: circle.y },
     targetPosition: { x: target.x, y: target.y },
     targetNumber: trials,
     blockNumber: blockScores.length,
-    identifier: localStorage.getItem('identifier')
+    identifier: identifier
   });
   
   if (onBreak) {
@@ -301,9 +278,9 @@ function startBreak() {
   scoreDisplay.textContent = score;
   trials = 0;
   // Ensure authentication before saving data
-  authenticate().then(() => {
-    saveData(data);
-  });  
+  //authenticate().then(() => {
+  //  saveData(data, "pizza");
+  //});  
 const breakInterval = setInterval(() => {
     breakTime -= 1;
     if (breakTime <= 0) {
@@ -340,6 +317,8 @@ function drawBreakInfo() {
 toggleMappingButton.addEventListener('click', () => {
   currentMapping = (currentMapping + 1) % mappings.length;
 });
+
+drawInstructions();
 
 window.addEventListener('keydown', handleKeyDown);
 window.addEventListener('keyup', handleKeyUp);
