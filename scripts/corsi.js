@@ -105,6 +105,10 @@ function recordClick(e) {
             } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 corsi_end = true; 
+                 // Ensure authentication before saving data
+                 authenticate().then(() => {
+                 saveData(data, "corsi");
+                 });  
                 writeInstructions(['Task is finished. Press the space bar to begin the pizza delivery game.']);
             }
         }
@@ -128,10 +132,6 @@ document.body.onkeyup = function(e) {
         startTrial();
     }
     else if (e.keyCode === 32 && corsi_end) {
-        // Ensure authentication before saving data
-        authenticate().then(() => {
-            saveData(data, "corsi");
-        });  
         window.location.href = "pizza.html";
     }
 }
