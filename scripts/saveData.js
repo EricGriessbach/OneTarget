@@ -38,11 +38,10 @@ export async function authenticate() {
     console.error("Error: ", errorCode, errorMessage);
   }
 }
-
 export async function saveData(data, task) {
   if (uid) {
     try {
-      await setDoc(doc(db, task, uid), data);
+      await setDoc(doc(db, task, uid), { data: data });
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
