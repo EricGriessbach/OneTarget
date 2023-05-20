@@ -1,4 +1,4 @@
-//import { saveData, authenticate } from "./saveData.js";
+import { saveData, authenticate } from "./saveData.js";
 
 var canvas = document.getElementById('gameCanvas');
 canvas.width = window.innerWidth;
@@ -128,9 +128,9 @@ document.body.onkeyup = function(e) {
     }
     else if (e.keyCode === 32 && corsi_end) {
         // Ensure authentication before saving data
-        //authenticate().then(() => {
-        //  saveData(data, "corsi");
-        //});  
+        authenticate().then(() => {
+            saveData(data, "corsi");
+        });  
         window.location.href = "pizza.html";
     }
 }
