@@ -1,4 +1,4 @@
-//import { saveData, authenticate } from "./saveData.js";
+import { saveData, authenticate } from "./saveData.js";
 
 const gameContainer = document.getElementById("gameContainer");
 const toggleMappingButton = document.getElementById("toggleMapping");
