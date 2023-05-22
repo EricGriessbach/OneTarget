@@ -23,6 +23,7 @@ const maxTrials = 5;
 const breakDuration = 10; // 30 seconds
 let breakTime = breakDuration;
 let blockScores = [];
+let block = 1;
 let onBreak = false;
 
 let data = []; // Data for each frame will be stored here
@@ -160,7 +161,7 @@ function handleKeyUp(event) {
 
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
+  frameCount += 1;
     // Store the data for this frame
   data.push({
     frame: frameCount,
@@ -273,6 +274,8 @@ function startBreak() {
   authenticate().then(() => {
     saveData(data, "pizza", sessionID.toString());
   });  
+  data = []; 
+  block += 1;
 const breakInterval = setInterval(() => {
     breakTime -= 1;
     if (breakTime <= 0) {
