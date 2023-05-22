@@ -13,6 +13,7 @@ var canStartNextTrial = true;
 var data = []; 
 var corsi_end = false;
 const n_trials = 2;
+var sessionID;
 
 function createTarget() {
     return {
@@ -39,6 +40,7 @@ function writeInstructions(lines) {
 }
 
 function startTrial() {
+    sessionID = Date.now();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     targets = [];
     userClicks = [];
@@ -79,7 +81,7 @@ function recordClick(e) {
         identifier: localStorage.getItem('identifier'),
         clickPosition: {x, y},
         targetPosition: targets[userClicks.length - 1],
-        sessionID: Date.now() 
+        sessionID: sessionID
     });
 
     ctx.beginPath();
@@ -107,7 +109,6 @@ function recordClick(e) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 corsi_end = true; 
                  // Ensure authentication before saving data
-                 var sessionID = Date.now(); // generate a unique sessionID
                  authenticate().then(() => {
                      saveData(data, "corsi", sessionID.toString()); // pass the sessionID to the saveData function
                  }); 
