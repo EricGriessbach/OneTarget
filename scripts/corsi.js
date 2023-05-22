@@ -109,7 +109,7 @@ function recordClick(e) {
                  // Ensure authentication before saving data
                  var sessionID = Date.now(); // generate a unique sessionID
                  authenticate().then(() => {
-                     saveData(data, "corsi", sessionID); // pass the sessionID to the saveData function
+                     saveData(data, "corsi", sessionID.toString()); // pass the sessionID to the saveData function
                  }); 
                 writeInstructions(['Task is finished. Press the space bar to begin the pizza delivery game.']);
             }
