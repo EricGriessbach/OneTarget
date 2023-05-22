@@ -31,17 +31,8 @@ let frameCount = 0; // Frame counter
 let gameStarted = false;
 
 const identifier = localStorage.getItem('identifier');
-/*
-if (!identifier) {
-    ctx.fillStyle = "red";
-    ctx.font = "30px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("No identifier was found.", canvas.width / 2, canvas.height / 2 - 50);
-    ctx.fillText("Please start the experiment again with the original link provided.", canvas.width / 2, canvas.height / 2);
-    // stop further execution of the script
-    throw new Error('No identifier was found');
-}
-*/
+var sessionID;
+
 // The circle object
 const circle = {
     x: canvas.width / 2,
@@ -272,6 +263,7 @@ canvas.addEventListener('click', function(event) {
 
 // Start the break
 function startBreak() {
+  sessionID = Date.now();
   onBreak = true;
   blockScores.push(score);
   score = 0;
@@ -279,7 +271,7 @@ function startBreak() {
   trials = 0;
   // Ensure authentication before saving data
   authenticate().then(() => {
-    saveData(data, "pizza");
+    saveData(data, "pizza", sessionID.toString());
   });  
 const breakInterval = setInterval(() => {
     breakTime -= 1;
