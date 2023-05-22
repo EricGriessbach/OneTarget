@@ -78,7 +78,8 @@ function recordClick(e) {
         ClickCounter: userClicks.length,
         identifier: localStorage.getItem('identifier'),
         clickPosition: {x, y},
-        targetPosition: targets[userClicks.length - 1]
+        targetPosition: targets[userClicks.length - 1],
+        sessionID: Date.now() 
     });
 
     ctx.beginPath();
@@ -106,9 +107,10 @@ function recordClick(e) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 corsi_end = true; 
                  // Ensure authentication before saving data
+                 var sessionID = Date.now(); // generate a unique sessionID
                  authenticate().then(() => {
-                 saveData(data, "corsi");
-                 });  
+                     saveData(data, "corsi", sessionID); // pass the sessionID to the saveData function
+                 }); 
                 writeInstructions(['Task is finished. Press the space bar to begin the pizza delivery game.']);
             }
         }
