@@ -41,7 +41,7 @@ export async function authenticate() {
 export async function saveData(data, task, sessionID) {
   if (uid) {
     try {
-      await setDoc(doc(db, task, uid, sessionID), { data: data });
+      await setDoc(doc(db, task, uid, "sessions", sessionID), { data: data });
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
