@@ -38,10 +38,11 @@ export async function authenticate() {
     console.error("Error: ", errorCode, errorMessage);
   }
 }
+
 export async function saveData(data, task, sessionID) {
   if (uid) {
     try {
-      await setDoc(doc(db, task, uid, "sessions", sessionID), { data: data });
+      await setDoc(doc(db, task, uid, sessionID), { ...data });
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
@@ -50,3 +51,4 @@ export async function saveData(data, task, sessionID) {
     console.error("User is not authenticated. Cannot save data.");
   }
 }
+
