@@ -39,6 +39,15 @@ export async function authenticate() {
   }
 }
 
+export async function saveSessionInfo(userID, sessionID, task) {
+  try {
+      await setDoc(doc(db, "sessionInfo", `${userID}_${sessionID}`), { userID, sessionID, task });
+      console.log("Session info successfully written!");
+  } catch (error) {
+      console.error("Error writing session info: ", error);
+  }
+}
+
 export async function saveData(data, task, sessionID) {
   if (uid) {
     try {
