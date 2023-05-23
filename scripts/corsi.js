@@ -79,9 +79,11 @@ function recordClick(e) {
         Trial: trialCounter,
         ClickCounter: userClicks.length,
         identifier: localStorage.getItem('identifier'),
-        clickPosition: {x, y},
-        targetPosition: targets[userClicks.length - 1],
-        sessionID: sessionID
+        clickPositionX: x,
+        clickPositionX: y,
+        targetPositionX: targets[userClicks.length - 1].x,
+        targetPositionY: targets[userClicks.length - 1].y,
+        sessionID: Date.now() 
     });
 
     ctx.beginPath();
