@@ -1,4 +1,4 @@
-import { saveData, authenticate } from "./saveData.js";
+import { saveData, authenticate, saveSessionInfo } from "./saveData.js";
 
 var canvas = document.getElementById('gameCanvas');
 canvas.width = window.innerWidth;
@@ -112,8 +112,8 @@ function recordClick(e) {
                 corsi_end = true; 
                  // Ensure authentication before saving data
                  authenticate().then(() => {
-                     saveData(data, "corsi", sessionID.toString()); // pass the sessionID to the saveData function
-                     saveSessionInfo(uid, sessionID, "corsi");
+                     saveData(data, "Corsi", sessionID.toString()); // pass the sessionID to the saveData function
+                     saveSessionInfo(uid, sessionID, "Corsi");
                  }); 
                 writeInstructions(['Task is finished. Press the space bar to begin the pizza delivery game.']);
             }
